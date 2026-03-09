@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT. Firmansyah Khatulistiwa</title>
+    <link rel="icon" type="image/png" href="https://firmansgroup.com/holding_logo.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Gaya Dasar & Latar Belakang (Warna dasar halaman) */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f9fafb; /* Abu-abu sangat terang */
+            color: #111827;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 0;
+            padding: 0; /* Padding dihapus agar video bisa menyentuh atas layar */
+        }
+
+        /* Kontainer Utama (Sekarang tanpa background putih & shadow) */
+        .main-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        /* Header Video Parallax */
+        .video-header {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            position: relative;
+            background-color: #e5e7eb;
+            overflow: hidden; 
+            border-radius: 0 0 32px 32px; /* Melengkungkan bagian bawah video agar lebih manis */
+        }
+
+        .video-header video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.2); 
+            will-change: transform; 
+        }
+
+        /* Fade bawah video menyatu dengan warna body (#f9fafb) */
+        .video-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to bottom, rgba(249,250,251,0) 0%, rgba(249,250,251,1) 100%);
+            z-index: 1;
+        }
+
+        /* Profil dan Logo */
+        .profile-section {
+            text-align: center;
+            padding: 0 30px 10px 30px;
+            position: relative;
+        }
+
+        .profile-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid #f9fafb; /* Border disesuaikan dengan warna background dasar */
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-top: -55px;
+            position: relative;
+            z-index: 2;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #111827; 
+            letter-spacing: -0.5px;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            color: #4b5563; 
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .description strong {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .description i {
+            font-style: italic;
+            color: #6b7280;
+        }
+
+        /* --- CSS BARU: CAROUSEL DENGAN KARTU INDIVIDU --- */
+        .carousel-section {
+            margin: 10px 0 30px 0;
+            position: relative;
+        }
+
+        .carousel-title {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 10px 0; /* Memberi ruang untuk bayangan kartu */
+        }
+
+        /* Efek bayangan memudar disesuaikan dengan warna body (#f9fafb) */
+        .carousel-wrapper::before,
+        .carousel-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .carousel-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, rgba(249,250,251,1) 0%, rgba(249,250,251,0) 100%);
+        }
+
+        .carousel-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, rgba(249,250,251,1) 0%, rgba(249,250,251,0) 100%);
+        }
+
+        .carousel-track {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Jarak antar kartu logo */
+            width: max-content;
+            animation: scroll-left 20s linear infinite; /* Kecepatan putaran */
+        }
+
+        /* Kartu putih pembungkus logo */
+        .logo-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            width: 80px; /* Ukuran lebar kartu */
+            height: 80px; /* Ukuran tinggi kartu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Logo berwarna di dalam kartu */
+        .logo-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        /* --- AKHIR CSS CAROUSEL --- */
+
+        /* GAYA TOMBOL ALA TAILWIND */
+        .links-container {
+            padding: 0 25px 20px 25px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            background-color: #ffffff; /* Kartu putih untuk tombol */
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px; 
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* Bayangan sedikit lebih terlihat */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn i {
+            position: absolute;
+            left: 20px;
+            font-size: 1.3rem;
+            color: #1a4a38; 
+            z-index: 2;
+        }
+
+        .link-btn span {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(26,74,56,0.05) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: all 0.6s ease;
+            z-index: 1;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px);
+            border-color: #d1d5db; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
+            color: #111827;
+        }
+
+        .link-btn:hover::before {
+            left: 200%; 
+        }
+
+        /* Kontainer Google Maps */
+        .map-wrapper {
+            padding: 0 25px;
+        }
+
+        .map-container {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            background: #ffffff; /* Kartu putih untuk map */
+        }
+        
+        .map-container h6 {
+            padding: 16px;
+            margin: 0;
+            font-weight: 600;
+            color: #111827;
+            text-align: center;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        /* FOOTER SEDERHANA */
+        .simple-footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            color: #9ca3af; 
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <div class="video-header" data-aos="fade-down" data-aos-duration="1000">
+            <video id="parallaxVideo" autoplay loop muted playsinline>
+                <source src="assets/hero.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="profile-section">
+            <img src="https://uploads.onecompiler.io/42bwrvdku/44fsxbmqk/Desain%20tanpa%20judul%20(2).png" alt="Logo PT. Firmansyah Khatulistiwa" class="profile-logo" data-aos="zoom-in" data-aos-delay="200">
+            
+            <h1 data-aos="fade-up" data-aos-delay="300">PT. Firmansyah Khatulistiwa</h1>
+            
+            <p class="description" data-aos="fade-up" data-aos-delay="400">
+                <strong>Startup Kalbar</strong> <i>penyedia pembiayaan syariah & solusi keuangan.</i> <br>
+                Kami mendorong pemberdayaan ekonomi dan sosial melalui layanan keuangan inklusif.
+            </p>
+        </div>
+
+        <div class="carousel-section" data-aos="fade-up" data-aos-delay="450">
+            <div class="carousel-title">Ekosistem Kami</div>
+            <div class="carousel-wrapper">
+                <div class="carousel-track">
+                    <div class="logo-card"><img src="https://firmansgroup.com/wgs_karousel.png" alt="WGS"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/pnk.png" alt="PNK"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/agri_logo.png" alt="Agri"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/entertaint.png" alt="Entertaint"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/koperasi.png" alt="Koperasi"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/eklb_text.png" alt="EKLB"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/eki_logo.png" alt="EKI"></div>
+                    
+                    <div class="logo-card"><img src="https://firmansgroup.com/wgs_karousel.png" alt="WGS"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/pnk.png" alt="PNK"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/agri_logo.png" alt="Agri"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/entertaint.png" alt="Entertaint"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/koperasi.png" alt="Koperasi"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/eklb_text.png" alt="EKLB"></div>
+                    <div class="logo-card"><img src="https://firmansgroup.com/eki_logo.png" alt="EKI"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="links-container">
+            <a href="https://firmansgroup.com" target="_blank" class="link-btn" data-aos="fade-up" data-aos-delay="500">
+                <i class="bi bi-globe"></i> <span>Website Firmans Group</span>
+            </a>
+
+            <a href="https://instagram.com/firmansgroup" target="_blank" class="link-btn" data-aos="fade-up" data-aos-delay="600">
+                <i class="bi bi-instagram"></i> <span>@firmansgroup</span>
+            </a>
+
+            <a href="https://www.linkedin.com/company/pt-win-global-solusitama/" target="_blank" class="link-btn" data-aos="fade-up" data-aos-delay="700">
+                <i class="bi bi-linkedin"></i> <span>LinkedIn</span>
+            </a>
+
+            <a href="mailto:wgskalbar@gmail.com" class="link-btn" data-aos="fade-up" data-aos-delay="800">
+                <i class="bi bi-envelope-fill"></i> <span>wgskalbar@gmail.com</span>
+            </a>
+        </div>
+
+        <div class="map-wrapper" data-aos="fade-up" data-aos-delay="900" data-aos-offset="50">
+            <div class="map-container">
+                <h6>Lokasi Kami</h6>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.9088260248575!2d109.362424768743!3d-0.03316230225925738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e1d59002f4751e9%3A0xebc19c21d84d371d!2sFirman's%20Group!5e0!3m2!1sen!2sid!4v1773028653932!5m2!1sen!2sid" width="100%" height="250" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <div class="simple-footer">
+            © 2026 PT. Firmansyah Khatulistiwa.<br>All rights reserved.
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Mengaktifkan animasi AOS
+        AOS.init({
+            once: true, 
+            offset: 20  
+        });
+
+        // Script untuk Logika Parallax Video
+        window.addEventListener('scroll', function() {
+            const video = document.getElementById('parallaxVideo');
+            if(video) {
+                let scrollPosition = window.pageYOffset;
+                video.style.transform = `scale(1.2) translateY(${scrollPosition * 0.4}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
